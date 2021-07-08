@@ -1,1 +1,1 @@
-﻿[{"model": "products.productcategory", "pk": 1, "fields": {"name": "������", "description": "�������� ������"}}, {"model": "products.productcategory", "pk": 2, "fields": {"name": "�������", "description": null}}]
+[{"model": "products.productcategory", "pk": 1, "fields": {"name": "Одежда", "description": "Описание для категории одежда."}}, {"model": "products.productcategory", "pk": 2, "fields": {"name": "Новинки", "description": "Описание для категории новинки."}}]
