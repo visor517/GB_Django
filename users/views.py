@@ -45,3 +45,10 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+def profile(request):
+    context = {
+        'title': 'GeekShop - Личная страница'
+    }
+    return render(request, 'users/profile.html', context)
