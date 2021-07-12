@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.urls import reverse
-from users.forms import UserLoginForm, UserRegistrationForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from baskets.models import Basket
 
 
 def login(request):
@@ -14,14 +15,9 @@ def login(request):
             if user and user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
-        else:
-            print(form.errors)
     else:
         form = UserLoginForm()
-    context = {
-        'title': 'GeekShop - Авторизация',
-        'form': form,
-    }
+    context = {'title': 'GeekShop - Авторизация', 'form': form}
     return render(request, 'users/login.html', context)
 
 
@@ -30,9 +26,8 @@ def register(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистртровались!')
             return HttpResponseRedirect(reverse('users:login'))
-        else:
-            print(form.errors)
     else:
         form = UserRegistrationForm()
     context = {
@@ -48,7 +43,27 @@ def logout(request):
 
 
 def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, files=request.FILES, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Данные успешно изменены!')
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    baskets = Basket.objects.filter(user=request.user)
+    total_quantity = 0
+    total_sum = 0
+    for basket in baskets:
+        total_sum += basket.sum()
+        total_quantity += basket.quantity
+
     context = {
-        'title': 'GeekShop - Личная страница'
+        'title': 'GeekShop - Личная страница',
+        'form': form,
+        'baskets': baskets,
+        'total_sum': total_sum,
+        'total_quantity': total_quantity,
     }
     return render(request, 'users/profile.html', context)
