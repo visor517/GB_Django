@@ -45,6 +45,13 @@ def logout(request):
 
 
 def profile(request):
-    form = UserProfileForm(instance=request.user)
-    context = {'title': 'GeekShop - Личная страница','form': form}
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Данные успешно изменены!')
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {'title': 'GeekShop - Личная страница', 'form': form}
     return render(request, 'users/profile.html', context)
