@@ -16,10 +16,7 @@ def login(request):
                 return HttpResponseRedirect(reverse('index'))
     else:
         form = UserLoginForm()
-    context = {
-        'title': 'GeekShop - Авторизация',
-        'form': form,
-    }
+    context = {'title': 'GeekShop - Авторизация', 'form': form}
     return render(request, 'users/login.html', context)
 
 
@@ -32,10 +29,7 @@ def register(request):
             return HttpResponseRedirect(reverse('users:login'))
     else:
         form = UserRegistrationForm()
-    context = {
-        'title': 'GeekShop - Регистрация',
-        'form': form,
-    }
+    context = {'title': 'GeekShop - Регистрация', 'form': form}
     return render(request, 'users/register.html', context)
 
 
@@ -46,7 +40,7 @@ def logout(request):
 
 def profile(request):
     if request.method == 'POST':
-        form = UserProfileForm(instance=request.user, data=request.POST)
+        form = UserProfileForm(instance=request.user, files=request.FILES, data=request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Данные успешно изменены!')
