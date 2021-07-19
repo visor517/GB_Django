@@ -45,20 +45,18 @@ def logout(request):
 
 @login_required
 def profile(request):
+    user = request.user
     if request.method == 'POST':
-        form = UserProfileForm(instance=request.user, files=request.FILES, data=request.POST)
+        form = UserProfileForm(instance=user, files=request.FILES, data=request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Данные успешно изменены!')
             return HttpResponseRedirect(reverse('users:profile'))
     else:
-        form = UserProfileForm(instance=request.user)
-
-    baskets = Basket.objects.filter(user=request.user)
-
+        form = UserProfileForm(instance=user)
     context = {
         'title': 'GeekShop - Личная страница',
         'form': form,
-        'baskets': baskets,
+        'baskets': Basket.objects.filter(user=user),
     }
     return render(request, 'users/profile.html', context)
