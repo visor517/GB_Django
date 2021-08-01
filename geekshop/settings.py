@@ -138,7 +138,7 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/users/login/'
 
-DOMAIN = 'http://localhost:8088/'
+DOMAIN = 'http://localhost:8000'
 
 EMAIL_HOST = 'localhost'
 EMAIL_POST = 25

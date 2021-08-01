@@ -6,6 +6,7 @@ from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from baskets.models import Basket
 from django.conf import settings
 from django.core.mail import send_mail
+from users.models import User
 
 
 def login(request):
@@ -66,7 +67,14 @@ def profile(request):
 
 
 def verify(request, email, activation_key):
-    pass
+    user = User.objects.filter(email=email).first()
+    if user:
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.is_active = True
+            user.save()
+            auth.login(request, user)
+            return render(request, 'users/verify.html', {'title': 'GeekShop - Верификация'})
+    return HttpResponseRedirect(reverse('index'))
 
 
 def send_verify_mail(user):

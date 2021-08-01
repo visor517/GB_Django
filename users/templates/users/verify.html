@@ -1,0 +1,22 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}<link href="{% static 'css/products.css' %}" rel="stylesheet">{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    {% if user.is_authenticated %}
+                        <h3>Поздравляем!</h3>
+                        <div>Пользователь {{ user.username }} успешно активизирован.</div>
+                    {% else %}
+                        <h3>Ошибка</h3>
+                        <div>Пользователя {{ user.username }} не удалось активизировать.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
