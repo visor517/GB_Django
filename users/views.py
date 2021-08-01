@@ -61,7 +61,7 @@ def profile(request):
     context = {
         'title': 'GeekShop - Личная страница',
         'form': form,
-        'baskets': Basket.objects.filter(user=user),
+        # 'baskets': Basket.objects.filter(user=user),
     }
     return render(request, 'users/profile.html', context)
 
@@ -73,7 +73,7 @@ def verify(request, email, activation_key):
             user.is_active = True
             user.save()
             auth.login(request, user)
-            return render(request, 'users/verify.html', {'title': 'GeekShop - Верификация'})
+        return render(request, 'users/verify.html', {'title': 'GeekShop - Верификация'})
     return HttpResponseRedirect(reverse('index'))
 
 
