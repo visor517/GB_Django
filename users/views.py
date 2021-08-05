@@ -57,6 +57,9 @@ def profile(request):
             form.save()
             messages.success(request, 'Данные успешно изменены!')
             return HttpResponseRedirect(reverse('users:profile'))
+        else:
+            messages.warning(request, 'Что-то пошло не так с валидацией!')
+            return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = UserProfileForm(instance=user)
         form_extention = UserExtentionForm(instance=request.user.userextention)
