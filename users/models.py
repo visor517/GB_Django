@@ -19,7 +19,7 @@ class User(AbstractUser):
         return True
 
 
-class UserProfile(models.Model):
+class UserExtention(models.Model):
     MALE = 'M'
     FEMALE = 'W'
 
@@ -34,10 +34,10 @@ class UserProfile(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, blank=True, max_length=1, verbose_name='пол')
 
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_user_extention(sender, instance, created, **kwargs):
         if created:
-            UserProfile.objects.create(user=instance)
+            UserExtention.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.userprofile.save()
+    def save_user_extention(sender, instance, **kwargs):
+        instance.userextention.save()
