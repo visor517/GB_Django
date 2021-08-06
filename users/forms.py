@@ -73,7 +73,7 @@ class UserProfileForm(UserChangeForm):
 class UserExtentionForm(forms.ModelForm):
     class Meta:
         model = UserExtention
-        fields = ('tagline', 'about_me', 'gender',)
+        fields = ('tagline', 'about_me', 'gender', 'age')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

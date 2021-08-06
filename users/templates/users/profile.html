@@ -43,13 +43,19 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form_extention.age.id_for_label }}">Возраст</label>
+                                {{ form_extention.age }}
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="small mb-1" for="{{ form_extention.gender.id_for_label }}">Пол</label>
                                 {{ form_extention.gender }}
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="small mb-1" for="{{ form_extention.tagline.id_for_label }}">Теги</label>
                                 {{ form_extention.tagline }}

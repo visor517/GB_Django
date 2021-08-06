@@ -32,6 +32,7 @@ class UserExtention(models.Model):
     tagline = models.CharField(max_length=150, blank=True, verbose_name='теги')
     about_me = models.TextField(blank=True, verbose_name='о себе')
     gender = models.CharField(choices=GENDER_CHOICES, blank=True, max_length=1, verbose_name='пол')
+    age = models.DateField(blank=True, null=True, verbose_name='возраст')
 
     @receiver(post_save, sender=User)
     def create_user_extention(sender, instance, created, **kwargs):
