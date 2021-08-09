@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
    {% include 'ordersapp/includes/inc_order_summary.html' %}
    <div class="order_form">
        <form action="" method="post">
@@ -36,9 +37,11 @@
                    </tr>
                {% endfor %}
            </table>
-           <button type="submit" value="сохранить" class="btn btn-default btn-round form-control last">сохранить</button>
-           {% include 'ordersapp/includes/inc_order_actions.html' %}
+           <div class="container">
+               <button type="submit" value="сохранить" class="btn btn-secondary btn-round">Cохранить</button>
+               {% include 'ordersapp/includes/inc_order_actions.html' %}
+           </div>
        </form>
    </div>
-
+</div>
 {% endblock %}
