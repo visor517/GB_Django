@@ -26,6 +26,14 @@ window.onload = function () {
         }
     })
 
+    $('.order_form').on('click', 'input[type=checkbox]', function() {
+        const orderitem_num = parseInt(event.target.name.replace('orderitems-', '').replace('-quantity', ''))
+
+        let delta_quantity = event.target.checked ? -quantity_arr[orderitem_num] : +quantity_arr[orderitem_num]
+
+        orderSummaryUpdate(price_arr[orderitem_num], delta_quantity)
+    })
+
     function orderSummaryUpdate(orderitem_price, delta_quantity) {
         let delta_cost = orderitem_price * delta_quantity
 
