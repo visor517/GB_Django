@@ -2,11 +2,11 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserExtentionForm
 from baskets.models import Basket
 from django.conf import settings
 from django.core.mail import send_mail
-from users.models import User
+from users.models import User, UserExtention
 
 
 def login(request):
@@ -52,15 +52,21 @@ def profile(request):
     user = request.user
     if request.method == 'POST':
         form = UserProfileForm(instance=user, files=request.FILES, data=request.POST)
-        if form.is_valid():
+        form_extention = UserExtentionForm(instance=request.user.userextention, data=request.POST)
+        if form.is_valid() and form_extention.is_valid():
             form.save()
             messages.success(request, 'Данные успешно изменены!')
             return HttpResponseRedirect(reverse('users:profile'))
+        else:
+            messages.warning(request, 'Что-то пошло не так с валидацией!')
+            return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = UserProfileForm(instance=user)
+        form_extention = UserExtentionForm(instance=request.user.userextention)
     context = {
         'title': 'GeekShop - Личная страница',
         'form': form,
+        'form_extention': form_extention,
         # 'baskets': Basket.objects.filter(user=user),
     }
     return render(request, 'users/profile.html', context)
