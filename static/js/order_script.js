@@ -43,4 +43,18 @@ window.onload = function () {
         $('.order_total_quantity').html(order_total_quantity)
         $('.order_total_cost').html(order_total_cost)
     }
+
+    $('.formset_row').formset({
+        addText: 'Добавить товар',
+        deleteText: 'Удалить',
+        prefix: 'orderitems',
+        removed: deleteOrderItem
+    })
+
+    function deleteOrderItem(row) {
+        let target_name = row[0].querySelector('input[type=number]').name
+        let orderitem_num = target_name.replace('orderitems-', '').replace('-quantity', '')
+        let delta_quantity = -quantity_arr[orderitem_num]
+        orderSummaryUpdate(price_arr[orderitem_num], delta_quantity)
+    }
 }
