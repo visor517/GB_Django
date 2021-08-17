@@ -134,7 +134,6 @@ def product_quantity_update_on_delete(sender, instance, **kwargs):
 
 def product_price(request, pk):
     if request.is_ajax():
-        print('ajax')
         product_item = Product.objects.filter(pk=pk).first()
         if product_item:
             return JsonResponse({'price': product_item.price})
