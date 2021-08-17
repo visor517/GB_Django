@@ -57,4 +57,27 @@ window.onload = function () {
         let delta_quantity = -quantity_arr[orderitem_num]
         orderSummaryUpdate(price_arr[orderitem_num], delta_quantity)
     }
+
+    $('.order_form').on('change', 'select', function () {
+        let target = event.target
+        const orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''))
+        let orderitem_product_pk = target.options[target.selectedIndex].value
+
+        $.ajax({
+            url: '/orders/product/' + orderitem_product_pk + '/price/',
+            success: function (data) {
+                if (data.price) {
+                    price_arr[orderitem_num] = parseFloat(data.price)
+                    const price_html = '<span>' + String(data.price).replace('.',',') + 'руб.</span>'
+                    const curr_tr = $('.order_form table').find('tr:eq(' + (orderitem_num + 1) + ')')
+                    console.log(curr_tr)
+                    curr_tr.find('td:eq(2)').html(price_html)
+                }
+            },
+        })
+    })
+
+    // function orderSummaryRecalc() {
+    //
+    // }
 }
