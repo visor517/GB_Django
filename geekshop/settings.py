@@ -120,6 +120,14 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'stroy-kran_geekshop',
+#         'USER': '046172882_geeksh',
+#         'PASSWORD': '______',
+#     }
+# }
 
 
 # Password validation
