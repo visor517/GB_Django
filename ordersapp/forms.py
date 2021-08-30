@@ -1,5 +1,5 @@
 from django import forms
-
+from products.models import Product
 from ordersapp.models import Order, OrderItem
 
 
@@ -27,3 +27,4 @@ class OrderItemForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+        self.fields['product'].queryset = Product.objects.all().select_related()
